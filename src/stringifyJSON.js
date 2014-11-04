@@ -28,7 +28,16 @@ var stringifyJSON = function(obj) {
     } else if(obj === null){
       result = 'null';
     } else {
-      result += '{}';
+      result += '{';
+      for(var key in obj){
+        if(!(key === 'functions' || key === 'undefined')){
+          result += stringifyJSON(key) + ':' + stringifyJSON(obj[key]) + ',';
+        }
+      }
+      if(result.length > 1){
+        result = result.slice(0, -1);
+      }
+      result += '}';
     }
 
 
